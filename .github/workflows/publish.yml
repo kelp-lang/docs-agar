@@ -1,0 +1,23 @@
+name: Build mdBook and publish
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Require mdbook
+        uses: peaceiris/actions-mdbook@v1.1.13
+        
+      - name: Run mdbook
+        run: mdbook build
+      
+      - name: Publish
+        uses: peaceiris/actions-gh-pages@v3.7.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./book
